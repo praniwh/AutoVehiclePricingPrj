@@ -1,6 +1,6 @@
 $schema: https://azuremlschemas.azureedge.net/latest/pipelineJob.schema.json
 type: pipeline
-display_name:randomforest_tree_training_pipeline  # Provide the display name for the pipeline
+display_name: randomforest_tree_training_pipeline  # Provide the display name for the pipeline
 experiment_name: usedcars_price_prediction_training  # Provide the experiment name
 description: Pipeline for data preparation, training, prediction, and model registration # Provide the description for the pipeline
 
