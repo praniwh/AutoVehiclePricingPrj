@@ -11,9 +11,9 @@ inputs:
 
 outputs:
   train_data:
-    type: uri_folder    # Specify the type for train_data output
+    type: uri_file    # Specify the type for train_data output
   test_data:
-    type: uri_folder    # Specify the type for test_data output
+    type: uri_file    # Specify the type for test_data output
   model_info_output_path:
     type: mlflow_model    # Specify the type for model_info_output_path output
 
