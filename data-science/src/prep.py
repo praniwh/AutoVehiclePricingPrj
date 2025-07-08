@@ -51,13 +51,18 @@ def main(args):  # Write the function name for the main data preparation logic
  if __name__ == "__main__":
     mlflow.start_run()
 
+    # Parse Arguments
     args = parse_args()
 
-    print(f"Raw data path: {args.raw_data}")
-    print(f"Train dataset output path: {args.train_data}")
-    print(f"Test dataset path: {args.test_data}")
-    print(f"Test-train ratio: {args.test_train_ratio}")
+    lines = [
+        f"Raw data path: {args.raw_data}",
+        f"Train dataset output path: {args.train_data}",
+        f"Test dataset path: {args.test_data}",
+        f"Test-train ratio: {args.test_train_ratio}",
+    ]
+
+    for line in lines:
+        print(line)
 
     main(args)
-
     mlflow.end_run()
