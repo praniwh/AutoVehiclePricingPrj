@@ -26,7 +26,13 @@ def main(args):
     '''Loads the best-trained model from the sweep job and registers it'''
 
     print("Registering ", args.model_name)
+    print(f"Model path: {args.model_path}")
 
+    if not os.path.exists(args.model_path):
+        raise FileNotFoundError(f"Model path not found: {args.model_path}")
+
+    mlflow.start_run()
+    
    # Load model
    model = mlflow.sklearn.load_model(args.model_path))  # Load the model from model_path
 
@@ -42,15 +48,15 @@ def main(args):
     # Write model info
     print("Writing JSON")
     model_info = {"id": f"{args.model_name}:{model_version}"}
+    os.makedirs(args.model_info_output_path, exist_ok=True)
     output_path = os.path.join(args.model_info_output_path, "model_info.json")  # Specify the name of the JSON file (model_info.json)
     with open(output_path, "w") as of:
         json.dump(model_info, of)  # write model_info to the output file
 
+    mlflow.end_run()
 
 if __name__ == "__main__":
-    
-    mlflow.start_run()
-    
+  
     # Parse Arguments
     args = parse_args()
     
@@ -65,4 +71,4 @@ if __name__ == "__main__":
 
     main(args)
 
-    mlflow.end_run()
+    
