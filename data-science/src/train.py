@@ -11,6 +11,7 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error
 import mlflow
 import mlflow.sklearn
+import os
 
 def parse_args():
     '''Parse input arguments'''
