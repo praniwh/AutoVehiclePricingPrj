@@ -5,7 +5,7 @@ experiment_name: usedcars_price_prediction_training  # Provide the experiment na
 description: Pipeline for data preparation, training, prediction, and model registration # Provide the description for the pipeline
 
 inputs:
-  input:
+  raw_data:
     type: uri_file
     path: azureml:used-cars-data@latest
 
