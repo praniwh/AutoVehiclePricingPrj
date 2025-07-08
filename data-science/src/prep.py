@@ -38,6 +38,9 @@ def main(args):  # Write the function name for the main data preparation logic
     train_df, test_df = train_test_split(df, test_size=args.test_train_ratio, random_state=42)
     
    # Save the train and test data
+    os.makedirs(args.train_data, exist_ok=True)
+    os.makedirs(args.test_data, exist_ok=True)
+    
     train_df.to_csv(os.path.join(args.train_data, "train.csv"), index=False)
     test_df.to_csv(os.path.join(args.test_data, "test.csv"), index=False)
 
@@ -45,22 +48,21 @@ def main(args):  # Write the function name for the main data preparation logic
     mlflow.log_metric('train size', train_df.shape[0])
     mlflow.log_metric('test size', test_df.shape[0])
 
-if __name__ == "__main__":
+ if __name__ == "__main__":
     mlflow.start_run()
 
     # Parse Arguments
-    args = parse_args()  # Call the function to parse arguments
+    args = parse_args()
 
     lines = [
-        f"Raw data path: {args.raw_data}",  # Print the raw_data path
-        f"Train dataset output path: {args.train_data}",  # Print the train_data path
-        f"Test dataset path: {args.test_data}",  # Print the test_data path
-        f"Test-train ratio: {args.test_train_ratio}",  # Print the test_train_ratio
+        f"Raw data path: {args.raw_data}",
+        f"Train dataset output path: {args.train_data}",
+        f"Test dataset path: {args.test_data}",
+        f"Test-train ratio: {args.test_train_ratio}",
     ]
 
     for line in lines:
         print(line)
     
     main(args)
-
     mlflow.end_run()
