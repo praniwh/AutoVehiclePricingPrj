@@ -55,13 +55,13 @@ def main(args):
     # Handle "None" string from sweep space
     max_depth = None if str(args.max_depth) == "None" else int(args.max_depth)
 
-    model = RandomForestRegressor(n_estimators=args.n_estimators, max_depth=args.max_depth, random_state=42)  # Provide the arguments for RandomForestRegressor
+    model = RandomForestRegressor(n_estimators=args.n_estimators, max_depth=max_depth, random_state=42)  # Provide the arguments for RandomForestRegressor
     model.fit(X_train, y_train)  # Train the model
 
     # Log model hyperparameters
     mlflow.log_param("model", "RandomForestRegressor")  # Provide the model name
     mlflow.log_param("n_estimators", args.n_estimators)
-    mlflow.log_param("max_depth", args.max_depth)
+    mlflow.log_param("max_depth", max_depth)
 
     # Predict using the RandomForest Regressor on test data
     yhat_test = model.predict(X_test)  # Predict the test data
