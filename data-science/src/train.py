@@ -52,6 +52,9 @@ def main(args):
     X_test = test_df.drop(columns=['price'])
 
     # Initialize and train a RandomForest Regressor
+    # Handle "None" string from sweep space
+    max_depth = None if str(args.max_depth) == "None" else int(args.max_depth)
+
     model = RandomForestRegressor(n_estimators=args.n_estimators, max_depth=args.max_depth, random_state=42)  # Provide the arguments for RandomForestRegressor
     model.fit(X_train, y_train)  # Train the model
 
