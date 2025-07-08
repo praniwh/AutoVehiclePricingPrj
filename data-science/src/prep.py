@@ -38,11 +38,21 @@ def main(args):  # Write the function name for the main data preparation logic
     train_df, test_df = train_test_split(df, test_size=args.test_train_ratio, random_state=42)
     
     # Step 3: Save the training and testing datasets as CSV files in separate directories for easier access and organization.  
+    # Create parent directories just in case    
+    # Construct full file paths
+    train_path = os.path.join(args.train_data, "train.csv")
+    test_path = os.path.join(args.test_data, "test.csv")
+
+    # Ensure the directories exist
+    os.makedirs(os.path.dirname(train_path), exist_ok=True)
+    os.makedirs(os.path.dirname(test_path), exist_ok=True)
+    
     print(f"Saving train data to: {args.train_data}")
     print(f"Saving test data to: {args.test_data}")
     
-    train_df.to_csv(os.path.join(args.train_data, "train.csv"), index=False)
-    test_df.to_csv(os.path.join(args.test_data, "test.csv"), index=False)
+   # Save CSV files
+    train_df.to_csv(train_path, index=False)
+    test_df.to_csv(test_path, index=False)
 
     # Step 4: Log the number of rows in the training and testing datasets as metrics for tracking and evaluation.  
     mlflow.log_metric('train size', train_df.shape[0])
