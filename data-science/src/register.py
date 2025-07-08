@@ -34,7 +34,7 @@ def main(args):
     mlflow.start_run()
     
    # Load model
-   model = mlflow.sklearn.load_model(args.model_path))  # Load the model from model_path
+   model = mlflow.sklearn.load_model(args.model_path)  # Load the model from model_path
 
     # Log model using mlflow
     mlflow.sklearn.log_model(model, args.model_name)  # Log the model using with model_name
