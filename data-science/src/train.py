@@ -33,8 +33,17 @@ def main(args):
     '''Read train and test datasets, train model, evaluate model, save trained model'''
 
     # Read train and test data from CSV
-    train_df = pd.read_csv(Path(args.train_data) / "train.csv")
-    test_df = pd.read_csv(Path(args.test_data) / "test.csv")
+    train_path = Path(args.train_data) / "train.csv"
+    test_path = Path(args.test_data) / "test.csv"
+
+    if not train_path.exists():
+        raise FileNotFoundError(f"Training file not found: {train_path}")
+    if not test_path.exists():
+        raise FileNotFoundError(f"Test file not found: {test_path}")
+
+
+    train_df = pd.read_csv(train_path)
+    test_df = pd.read_csv(test_path)
 
     # Split the data into input(X) and output(y) 
     y_train = train_df['price']  # Specify the target column
@@ -56,11 +65,12 @@ def main(args):
 
     # Compute and log mean squared error for test data
     mse = mean_squared_error(y_test, yhat_test)
-    print('Mean Squared Error of RandomForest Regressor on test set: {:.2f}'.format(mse))
+    print(f"Mean Squared Error of RandomForest Regressor on test set : {mse:.2f}")
     mlflow.log_metric("MSE", float(mse))  # Log the MSE
 
     # Save the model
-    mlflow.sklearn.save_model(sk_model=model, path=args.model_output)  # Save the model
+    os.makedirs(args.model_output, exist_ok=True)
+    mlflow.sklearn.save_model(model, args.model_output)  
 
 
 if __name__ == "__main__":
