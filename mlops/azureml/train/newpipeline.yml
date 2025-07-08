@@ -11,9 +11,9 @@ inputs:
 
 outputs:
   train_data:
-    type: uri_file    # Specify the type for train_data output
+    type: uri_folder    # Specify the type for train_data output
   test_data:
-    type: uri_file    # Specify the type for test_data output
+    type: uri_folder    # Specify the type for test_data output
   model_info_output_path:
     type: mlflow_model    # Specify the type for model_info_output_path output
 
@@ -73,12 +73,11 @@ jobs:
     code: ../../../data-science/src
     command: >-
       python register.py 
-      --model_name ${{inputs.model_name}} 
+      --model_name "used_cars_price_prediction_model" 
       --model_path ${{inputs.model_path}} 
       --model_info_output_path ${{outputs.model_info_output_path}}
     environment: azureml:used-cars-train-env@latest
     inputs:
-      model_name: "used_cars_price_prediction_model"
       model_path: ${{parent.jobs.sweep_step.outputs.model_output}}
     outputs:
       model_info_output_path: ${{parent.outputs.model_info_output_path}}
