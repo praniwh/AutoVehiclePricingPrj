@@ -34,20 +34,11 @@ def main(args):
 
     mlflow.start_run()
     
-    # Load model
-    model = mlflow.sklearn.load_model(args.model_path)  
-
-    # Save model in MLflow format to the output path
-    mlflow.sklearn.save_model(model, args.model_info_output_path)
-   
-    # Log model using mlflow
-    mlflow.sklearn.log_model(model, args.model_name)  # Log the model using with model_name
-
-    # Register directly from saved model directory 
+    # Register the model directly from folder (MLflow expects MLmodel file inside) 
     mlflow_model = mlflow.register_model(model_uri, args.model_name)  # register the model with model_uri and model_name
     print(f"Registered model version: {mlflow_model.version}")
 
-    # Write model info
+    # Write model info 
     print("Writing JSON")
     model_info = {"id": f"{args.model_name}:{model_version}"}
     
