@@ -75,7 +75,7 @@ def main(args):
     # Save the model
     os.makedirs(args.model_output, exist_ok=True)
     mlflow.sklearn.save_model(model, args.model_output)  
-    print(f"Best model location: {pipeline_job.outputs['pipeline_job_best_model']}")
+    print(f"Best model location: {args.model_output}")
 
 
 if __name__ == "__main__":
