@@ -27,7 +27,8 @@ def main(args):
 
     print("Registering ", args.model_name)
     print(f"Model path: {args.model_path}")
-
+    print(f"Model info output path: {args.model_info_output_path}")
+    
     if not os.path.exists(args.model_path):
         raise FileNotFoundError(f"Model path not found: {args.model_path}")
 
@@ -42,15 +43,14 @@ def main(args):
     # Log model using mlflow
     mlflow.sklearn.log_model(model, args.model_name)  # Log the model using with model_name
 
-    # Register logged model using mlflow
-    run_id = mlflow.active_run().info.run_id
-    model_uri = f'runs:/{run_id}/{args.model_name}'
+    # Register directly from saved model directory 
     mlflow_model = mlflow.register_model(model_uri, args.model_name)  # register the model with model_uri and model_name
-    model_version = mlflow_model.version  # Get the version of the registered model
+    print(f"Registered model version: {mlflow_model.version}")
 
     # Write model info
     print("Writing JSON")
     model_info = {"id": f"{args.model_name}:{model_version}"}
+    
     os.makedirs(args.model_info_output_path, exist_ok=True)
     output_path = os.path.join(args.model_info_output_path, "model_info.json")  # Specify the name of the JSON file (model_info.json)
     with open(output_path, "w") as of:
