@@ -43,7 +43,12 @@ def main(args):
     # Register the model directly from folder (MLflow expects MLmodel file inside) 
     run_id = mlflow.active_run().info.run_id
     model_uri = f'runs:/{run_id}/{args.model_name}'
+    print(f"Registering from URI: {model_uri}")
+    
     mlflow_model = mlflow.register_model(model_uri, args.model_name)  # register the model with model_uri and model_name
+    result = result.wait_for_completion()  #  wait until model is ready
+    model_version = result.version
+    
     print(f"Registered model version: {mlflow_model.version}")
 
     # Write model info 
