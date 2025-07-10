@@ -46,17 +46,17 @@ def main(args):
     print(f"Registering from URI: {model_uri}")
     
     mlflow_model = mlflow.register_model(model_uri, args.model_name)  # register the model with model_uri and model_name
-    result = result.wait_for_completion()  #  wait until model is ready
-    model_version = result.version
+    mlflow_model = mlflow_model.wait_for_completion()  #  wait until model is ready
     
+    model_version = mlflow_model.version
     print(f"Registered model version: {mlflow_model.version}")
 
-    # Write model info 
+    # Write model info s JSON
     print("Writing JSON")
     model_info = {"id": f"{args.model_name}:{model_version}"}
-    
     os.makedirs(args.model_info_output_path, exist_ok=True)
     output_path = os.path.join(args.model_info_output_path, "model_info.json")  # Specify the name of the JSON file (model_info.json)
+    
     with open(output_path, "w") as of:
         json.dump(model_info, of)  # write model_info to the output file
 
