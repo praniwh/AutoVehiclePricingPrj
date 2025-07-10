@@ -58,7 +58,7 @@ def main(args):
     with open(output_path, "w") as of:
         json.dump(model_info, of)  # write model_info to the output file
 
-    print(f"📄 Model info written to: {output_file}")
+    print(f"Model info written to: {output_path}")
     
     mlflow.end_run()
 
