@@ -47,6 +47,8 @@ def main(args):
     with open(output_path, "w") as of:
         json.dump(model_info, of)  # write model_info to the output file
 
+    print(f"📄 Model info written to: {output_file}")
+    
     mlflow.end_run()
 
 if __name__ == "__main__":
@@ -54,15 +56,7 @@ if __name__ == "__main__":
     # Parse Arguments
     args = parse_args()
     
-    lines = [
-        f"Model name: {args.model_name}",
-        f"Model path: {args.model_path}",
-        f"Model info output path: {args.model_info_output_path}"
-    ]
-
-    for line in lines:
-        print(line)
-
+    
     main(args)
 
     
