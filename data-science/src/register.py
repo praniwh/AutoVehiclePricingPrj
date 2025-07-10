@@ -48,7 +48,11 @@ def main(args):
     mlflow_model = mlflow.register_model(model_uri, args.model_name)  # register the model with model_uri and model_name
     model_version = mlflow_model.version
     print(f"Registered model version: {mlflow_model.version}")
-
+    
+    # Save model to output dir (required by AzureML)
+    mlflow.sklearn.save_model(sk_model=model, path=args.model_info_output_path)
+    print(f"[INFO] Saved MLmodel to: {args.model_info_output_path}")
+    
     # Write model info s JSON
     print("Writing JSON")
     model_info = {"id": f"{args.model_name}:{model_version}"}
