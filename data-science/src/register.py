@@ -46,8 +46,6 @@ def main(args):
     print(f"Registering from URI: {model_uri}")
     
     mlflow_model = mlflow.register_model(model_uri, args.model_name)  # register the model with model_uri and model_name
-    mlflow_model = mlflow_model.wait_for_completion()  #  wait until model is ready
-    
     model_version = mlflow_model.version
     print(f"Registered model version: {mlflow_model.version}")
 
