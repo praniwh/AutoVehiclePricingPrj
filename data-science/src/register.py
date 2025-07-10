@@ -33,8 +33,16 @@ def main(args):
         raise FileNotFoundError(f"Model path not found: {args.model_path}")
 
     mlflow.start_run()
+
+    # Load model
+    model = mlflow.sklearn.load_model(args.model_path)
+
+    # Log model
+    mlflow.sklearn.log_model(model, args.model_name)
     
     # Register the model directly from folder (MLflow expects MLmodel file inside) 
+    run_id = mlflow.active_run().info.run_id
+    model_uri = f'runs:/{run_id}/{args.model_name}'
     mlflow_model = mlflow.register_model(model_uri, args.model_name)  # register the model with model_uri and model_name
     print(f"Registered model version: {mlflow_model.version}")
 
