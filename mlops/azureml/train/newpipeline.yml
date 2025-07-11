@@ -54,7 +54,7 @@ jobs:
     search_space:
       n_estimators:
         type: choice
-        values: [10, 20, 30, 50]
+        values: [10, 20, 30, 55]
       max_depth:
         type: choice    # Specify the type for max_depth
         values: [3, 5, 10, 0]  # Provide the values for max_depth
